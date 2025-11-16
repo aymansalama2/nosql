@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Le rôle de la communication dans le leadership</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons pour les icônes -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    /* Animations avancées */
+    .slide {
+      opacity: 0;
+      transform: translateX(32px) scale(0.96) rotateY(2deg);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      display: none;
+      filter: blur(2px);
+    }
+    .slide.active {
+      opacity: 1;
+      transform: translateX(0) scale(1) rotateY(0deg);
+      display: block;
+      filter: blur(0px);
+    }
+    
+    /* Animation des éléments */
+    .fade-in {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Effet de survol sur les cartes */
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    
+    /* Gradient animé */
+    .gradient-bg {
+      background: linear-gradient(-45deg, #0f172a, #1e293b, #0f172a, #334155);
+      background-size: 400% 400%;
+      animation: gradientShift 8s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    /* Effet de pulsation */
+    .pulse-glow {
+      animation: pulseGlow 2s ease-in-out infinite alternate;
+    }
+    
+    @keyframes pulseGlow {
+      from { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+      to { box-shadow: 0 0 30px rgba(16, 185, 129, 0.6); }
+    }
+  </style>
+</head>
+<body class="bg-slate-950 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white min-h-screen flex flex-col">
+
+  <!-- Barre du haut -->
+  <header class="w-full px-8 py-4 flex items-center justify-between bg-slate-950/80 backdrop-blur border-b border-slate-800/80">
+
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-400 to-cyan-400 flex items-center justify-center text-slate-950 font-bold text-lg shadow-lg">
+        L
+      </div>
+      <div>
+        <h1 class="text-lg font-semibold leading-tight tracking-tight">Le rôle de la communication dans le leadership</h1>
+        <p class="text-xs text-slate-400">Présentation de français – Oral</p>
+
+      </div>
+    </div>
+    <div class="hidden sm:flex items-center gap-2 text-xs text-slate-400">
+      <span>Utilise</span>
+      <span class="px-2 py-1 rounded border border-slate-700 bg-slate-900/70">←</span>
+      <span class="px-2 py-1 rounded border border-slate-700 bg-slate-900/70">→</span>
+      <span>ou les boutons</span>
+    </div>
+  </header>
+
+  <!-- Zone principale (slides) -->
+  <main class="flex-1 flex items-center justify-center px-4 py-6 sm:px-8 sm:py-10">
+    <div class="w-full max-w-5xl aspect-[16/9] bg-slate-950/90 border border-slate-800/80 rounded-3xl shadow-[0_25px_80px_rgba(0,0,0,0.8)] ring-1 ring-emerald-500/15 overflow-hidden relative p-6 sm:p-10">
+
+      <!-- Indicateur de slide -->
+      <div class="absolute top-4 right-6 sm:right-8 flex flex-col items-end gap-1">
+        <div class="text-[11px] uppercase tracking-[0.18em] text-slate-500">Slide</div>
+        <div class="text-xs text-slate-200">
+          <span id="currentSlide">1</span>/<span id="totalSlides">7</span>
+        </div>
+        <div class="mt-1 w-28 h-1.5 rounded-full bg-slate-800 overflow-hidden">
+          <div id="progressBar" class="h-full bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full" style="width: 14%;"></div>
+        </div>
+      </div>
+
+      <!-- SLIDE 1 : Titre -->
+      <section class="slide active h-full flex flex-col lg:flex-row">
+        <div class="flex-1 flex flex-col justify-center pr-0 lg:pr-8">
+          <p class="text-sm uppercase tracking-[0.2em] text-emerald-300 mb-2">Présentation de français</p>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-4">
+            Le rôle de la <span class="text-emerald-400">communication</span><br />
+            dans le <span class="text-cyan-400">leadership</span>
+          </h2>
+          <p class="text-sm sm:text-base text-slate-300 mb-4 max-w-xl">
+            La communication permet au leader d’influencer, de motiver et de guider son équipe.
+            Dans cette présentation, nous allons voir pourquoi elle est au cœur du leadership.
+
+          </p>
+          <p class="text-xs text-slate-400">
+            Plan :
+            <br>1. Importance de la communication pour un leader
+            <br>2. Communication, confiance et motivation
+            <br>3. Compétences de communication d’un leader
+          </p>
+        </div>
+        <div class="flex-1 flex items-center justify-center mt-6 lg:mt-0">
+          <div class="relative w-full max-w-sm">
+            <img
+              src="https://images.pexels.com/photos/1181396/pexels-photo-1181396.jpeg?auto=compress&cs=tinysrgb&w=800"
+              alt="Leader en train de communiquer avec son équipe"
+              class="w-full h-64 sm:h-72 object-cover rounded-2xl shadow-xl border border-slate-800"
+            />
+            <div class="absolute -bottom-4 -left-4 bg-slate-900/90 border border-emerald-500/40 rounded-xl px-4 py-3 text-xs text-emerald-200 shadow-lg">
+              <p class="font-semibold">Communication & Leadership</p>
+              <p class="text-[11px] text-emerald-100/80">
+                Un leader efficace commence toujours par une communication claire.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2 : Introduction -->
+      <section class="slide h-full flex flex-col lg:flex-row">
+        <div class="flex-1 flex flex-col justify-center pr-0 lg:pr-8">
+          <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-emerald-400">Introduction</h2>
+          <p class="text-sm sm:text-base text-slate-200 mb-4">
+            Aujourd’hui, nous allons parler d’un thème essentiel :
+            <span class="font-semibold text-emerald-300">le rôle de la communication dans le leadership</span>.
+          </p>
+          <p class="text-sm sm:text-base text-slate-300 mb-3">
+            Sans communication, il n’y a pas de leadership. Grâce à elle, le leader :
+          </p>
+          <ul class="list-disc list-inside text-sm sm:text-base text-slate-300 space-y-1">
+            <li>influence son équipe ;</li>
+            <li>explique les objectifs à atteindre ;</li>
+            <li>motiver et guider chaque membre.</li>
+          </ul>
+          <p class="mt-4 text-sm text-slate-400">
+            Notre présentation comporte trois parties :
+            importance, confiance et motivation, puis compétences de communication.
+          </p>
+        </div>
+        <div class="flex-1 flex items-center justify-center mt-6 lg:mt-0">
+          <img
+            src="https://images.pexels.com/photos/3184296/pexels-photo-3184296.jpeg?auto=compress&cs=tinysrgb&w=800"
+            alt="Discussion en équipe"
+            class="w-full max-w-md h-64 sm:h-72 object-cover rounded-2xl shadow-xl border border-slate-800"
+          />
+        </div>
+      </section>
+
+      <!-- SLIDE 3 : Partie 1 - Importance -->
+      <section class="slide h-full flex flex-col">
+        <h2 class="text-xl sm:text-2xl font-bold mb-2 text-emerald-400">Partie 1 — Importance de la communication pour un leader</h2>
+        <p class="text-sm text-slate-400 mb-4">Pourquoi la communication est-elle indispensable ?</p>
+        <div class="grid md:grid-cols-3 gap-4 flex-1">
+          <div class="bg-slate-900/80 rounded-2xl border border-slate-800 p-4 card-hover">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                <i data-lucide="eye" class="w-4 h-4 text-emerald-400"></i>
+              </div>
+              <h3 class="font-semibold text-emerald-300 text-sm">1. Donner une vision claire</h3>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">
+              Un leader doit expliquer <strong>où va l'équipe</strong>, pourquoi on suit cette direction
+              et comment atteindre les objectifs. Une vision claire donne du sens au travail.
+            </p>
+          </div>
+          <div class="bg-slate-900/80 rounded-2xl border border-slate-800 p-4 card-hover">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center">
+                <i data-lucide="brain" class="w-4 h-4 text-cyan-400"></i>
+              </div>
+              <h3 class="font-semibold text-emerald-300 text-sm">2. Prendre de bonnes décisions</h3>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">
+              La communication permet d'<strong>écouter les idées</strong>, les critiques et les informations du terrain.
+              Le leader prend ainsi des décisions plus justes et plus efficaces.
+            </p>
+          </div>
+          <div class="bg-slate-900/80 rounded-2xl border border-slate-800 p-4 card-hover">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                <i data-lucide="handshake" class="w-4 h-4 text-purple-400"></i>
+              </div>
+              <h3 class="font-semibold text-emerald-300 text-sm">3. Gérer les conflits</h3>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">
+              En parlant ouvertement, le leader <strong>clarifie les malentendus</strong>, apaise les tensions
+              et trouve des solutions qui respectent chacun.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4 : Partie 2 - Confiance et motivation -->
+      <section class="slide h-full flex flex-col lg:flex-row">
+        <div class="flex-1 flex flex-col justify-center pr-0 lg:pr-8">
+          <h2 class="text-xl sm:text-2xl font-bold mb-2 text-emerald-400">Partie 2 — Communication, confiance et motivation</h2>
+          <p class="text-sm text-slate-400 mb-3">Comment le leader crée une dynamique positive ?</p>
+          <ul class="list-disc list-inside text-sm sm:text-base text-slate-200 space-y-2">
+            <li>
+              <span class="font-semibold text-emerald-300">Créer la confiance :</span>
+              une communication ouverte et honnête rend l’équipe plus engagée et plus sereine.
+            </li>
+            <li>
+              <span class="font-semibold text-emerald-300">Motiver l’équipe :</span>
+              les encouragements, la reconnaissance et les feedbacks positifs augmentent
+              la motivation et l’estime de soi.
+            </li>
+            <li>
+              <span class="font-semibold text-emerald-300">Favoriser la collaboration :</span>
+              en faisant circuler l’information, le leader connecte les membres
+              et renforce l’esprit d’équipe.
+            </li>
+          </ul>
+        </div>
+        <div class="flex-1 flex items-center justify-center mt-6 lg:mt-0">
+          <img
+            src="https://images.pexels.com/photos/1181560/pexels-photo-1181560.jpeg?auto=compress&cs=tinysrgb&w=800"
+            alt="Confiance et motivation dans une équipe"
+            class="w-full max-w-md h-64 sm:h-72 object-cover rounded-2xl shadow-xl border border-slate-800"
+          />
+        </div>
+      </section>
+
+      <!-- SLIDE 5 : Partie 3 - Compétences (1/2) -->
+      <section class="slide h-full flex flex-col">
+        <h2 class="text-xl sm:text-2xl font-bold mb-2 text-emerald-400">Partie 3 — Compétences de communication d’un leader</h2>
+        <p class="text-sm text-slate-400 mb-4">Quelles qualités de communication doit-il développer ?</p>
+        <div class="grid md:grid-cols-3 gap-4 flex-1">
+          <div class="bg-slate-900/80 rounded-2xl border border-slate-800 p-4">
+            <h3 class="font-semibold mb-2 text-emerald-300 text-sm">1. L’écoute active</h3>
+            <p class="text-xs sm:text-sm text-slate-200">
+              Le leader écoute vraiment pour comprendre, reformule les propos de son équipe
+              et pose des questions pour clarifier.
+            </p>
+          </div>
+          <div class="bg-slate-900/80 rounded-2xl border border-slate-800 p-4">
+            <h3 class="font-semibold mb-2 text-emerald-300 text-sm">2. La clarté</h3>
+            <p class="text-xs sm:text-sm text-slate-200">
+              Il transmet des messages simples, structurés et directs.
+              Pas de phrases compliquées : chacun doit comprendre facilement.
+            </p>
+          </div>
+          <div class="bg-slate-900/80 rounded-2xl border border-slate-800 p-4">
+            <h3 class="font-semibold mb-2 text-emerald-300 text-sm">3. L’empathie</h3>
+            <p class="text-xs sm:text-sm text-slate-200">
+              Il essaie de comprendre les émotions, les difficultés et les besoins de chaque membre.
+              Cela renforce la relation humaine.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6 : Partie 3 - Compétences (2/2) -->
+      <section class="slide h-full flex flex-col lg:flex-row">
+        <div class="flex-1 flex flex-col justify-center pr-0 lg:pr-8">
+          <div class="bg-slate-900/80 rounded-2xl border border-slate-800 p-4 mb-4">
+            <h3 class="font-semibold mb-2 text-emerald-300 text-sm">4. La communication non verbale</h3>
+            <p class="text-xs sm:text-sm text-slate-200">
+              Le regard, la posture, les gestes, le ton de la voix et le sourire
+              renforcent le message. Un leader cohérent aligne ses paroles et son langage corporel.
+            </p>
+          </div>
+          <div class="bg-slate-900/80 rounded-2xl border border-slate-800 p-4">
+            <h3 class="font-semibold mb-2 text-emerald-300 text-sm">5. Le feedback</h3>
+            <p class="text-xs sm:text-sm text-slate-200">
+              Le leader donne des retours réguliers : il félicite, corrige, oriente,
+              sans humilier ni décourager. Le feedback aide à progresser.
+            </p>
+          </div>
+        </div>
+        <div class="flex-1 flex items-center justify-center mt-6 lg:mt-0">
+          <img
+            src="https://images.pexels.com/photos/1181715/pexels-photo-1181715.jpeg?auto=compress&cs=tinysrgb&w=800"
+            alt="Leader qui communique avec son équipe"
+            class="w-full max-w-md h-64 sm:h-72 object-cover rounded-2xl shadow-xl border border-slate-800"
+          />
+        </div>
+      </section>
+
+      <!-- SLIDE 7 : Conclusion -->
+      <section class="slide h-full flex flex-col lg:flex-row">
+        <div class="flex-1 flex flex-col justify-center pr-0 lg:pr-8">
+          <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-emerald-400">Conclusion</h2>
+          <p class="text-sm sm:text-base text-slate-200 mb-4">
+            La communication est la base du leadership.
+          </p>
+          <ul class="list-disc list-inside text-sm sm:text-base text-slate-200 space-y-2">
+            <li>Elle permet d’expliquer la vision et les objectifs à l’équipe.</li>
+            <li>Elle motive, encourage et crée un climat de confiance.</li>
+            <li>Elle aide à résoudre les conflits et à renforcer la collaboration.</li>
+          </ul>
+          <p class="mt-4 text-sm text-slate-300">
+            Un bon leader n’est pas seulement quelqu’un qui décide.
+            C’est surtout quelqu’un qui communique de manière claire, humaine et respectueuse.
+          </p>
+        </div>
+        <div class="flex-1 flex items-center justify-center mt-6 lg:mt-0">
+          <div class="w-full max-w-md bg-gradient-to-br from-emerald-500/20 via-cyan-500/10 to-slate-900 border border-emerald-400/40 rounded-2xl p-5">
+            <p class="text-sm text-emerald-200 font-semibold mb-2">Message final</p>
+            <p class="text-xs sm:text-sm text-emerald-100">
+              « Communiquer, ce n’est pas seulement parler, c’est aussi écouter,
+              comprendre et inspirer. »
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Contrôles bas -->
+  <footer class="w-full px-4 sm:px-8 py-3 flex items-center justify-between bg-slate-950/80 border-t border-slate-800 text-xs text-slate-400">
+    <div class="flex items-center gap-3">
+      <button id="prevBtn" class="px-3 py-1.5 rounded-full border border-slate-700 bg-slate-900/80 text-slate-200 hover:border-emerald-400 hover:text-emerald-300 transition text-xs flex items-center gap-1">
+        ← Précédent
+      </button>
+      <button id="nextBtn" class="px-3 py-1.5 rounded-full border border-emerald-500 bg-emerald-500/90 text-slate-950 font-medium hover:bg-emerald-400 transition text-xs flex items-center gap-1">
+        Suivant →
+      </button>
+    </div>
+    <div class="hidden sm:block">
+      <span class="px-2 py-1 rounded border border-slate-700 bg-slate-900/80 mr-1">F11</span>
+      <span>pour le plein écran</span>
+    </div>
+    <div class="w-full h-1 bg-slate-700/40 rounded-full mt-2">
+      <div id="progressBar" class="h-full bg-emerald-400/90 rounded-full"></div>
+    </div>
+  </footer>
+
+  <!-- JavaScript pour la navigation -->
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const currentSlideSpan = document.getElementById('currentSlide');
+    const totalSlidesSpan = document.getElementById('totalSlides');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const progressBar = document.getElementById('progressBar');
+
+    let currentIndex = 0;
+    totalSlidesSpan.textContent = totalSlides;
+
+    function updateProgress(index) {
+      if (!progressBar) return;
+      const percentage = ((index + 1) / totalSlides) * 100;
+      progressBar.style.width = `${percentage}%`;
+    }
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+      currentSlideSpan.textContent = index + 1;
+      updateProgress(index);
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      showSlide(currentIndex);
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      showSlide(currentIndex);
+    }
+
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+
+    // Navigation avec les flèches du clavier
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
+
+    // Initialiser les icônes Lucide
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>

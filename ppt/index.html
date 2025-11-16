@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapport - Bases de Données SQL vs NoSQL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * { font-family: 'Inter', sans-serif; }
+        
+        .gradient-bg {
+            background: linear-gradient(-45deg, #0f172a, #1e293b, #334155, #475569);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-hidden { display: none; }
+        .section-visible { display: block; }
+        
+        .toc-item { cursor: pointer; transition: all 0.3s ease; }
+        .toc-item:hover { background: rgba(59, 130, 246, 0.1); }
+        
+        .figure-caption { counter-increment: figure-counter; }
+        .figure-caption::before { content: "Figure " counter(figure-counter) ": "; }
+        
+        body { counter-reset: figure-counter; }
+        
+        .print-section { page-break-after: always; }
+        
+        @media print {
+            .no-print { display: none !important; }
+            .print-section { page-break-after: always; }
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 p-4 no-print">
+        <div class="flex justify-between items-center">
+            <div class="glass-card rounded-full px-6 py-3">
+                <h1 class="text-lg font-bold">Rapport - Bases de Données</h1>
+            </div>
+            <div class="flex gap-2">
+                <button id="printBtn" class="glass-card rounded-full px-4 py-2 text-sm hover:bg-white/10 transition">
+                    <i data-lucide="printer" class="w-4 h-4 inline mr-2"></i>Imprimer
+                </button>
+                <button id="tocBtn" class="glass-card rounded-full px-4 py-2 text-sm hover:bg-white/10 transition">
+                    <i data-lucide="list" class="w-4 h-4 inline mr-2"></i>Sommaire
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenu principal -->
+    <main class="pt-20 px-6 max-w-6xl mx-auto">
+        <!-- Page de titre -->
+        <section id="title-page" class="min-h-screen flex items-center justify-center text-center print-section">
+            <div class="glass-card rounded-3xl p-12 max-w-4xl">
+                <div class="mb-8 floating">
+                    <div class="w-24 h-24 mx-auto rounded-full glass-card flex items-center justify-center mb-6">
+                        <i data-lucide="database" class="w-12 h-12 text-blue-300"></i>
+                    </div>
+                </div>
+                <h1 class="text-5xl font-black mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                    Rapport sur les Bases de Données
+                </h1>
+                <h2 class="text-2xl font-semibold mb-8 text-gray-300">
+                    Comparaison SQL vs NoSQL et Solutions Pratiques
+                </h2>
+                <div class="space-y-4 text-lg text-gray-400">
+                    <p><strong>Étudiant :</strong> Ayman Salama</p>
+                    <p><strong>Classe :</strong> EMSI 4ème année</p>
+                    <p><strong>Date :</strong> Novembre 2025</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Table des matières -->
+        <section id="table-of-contents" class="min-h-screen py-12 print-section">
+            <div class="glass-card rounded-3xl p-8">
+                <h2 class="text-4xl font-bold mb-8 text-center bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
+                    <i data-lucide="list" class="w-8 h-8 inline mr-3"></i>
+                    Table des Matières
+                </h2>
+                <div id="toc-content" class="space-y-3 text-lg">
+                    <!-- Généré automatiquement par JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Partie 1: Comparaison SQL vs NoSQL -->
+        <section id="partie1" class="min-h-screen py-12 print-section">
+            <div class="glass-card rounded-3xl p-8">
+                <h2 class="text-4xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    <i data-lucide="git-compare" class="w-8 h-8 inline mr-3"></i>
+                    Partie 1: Comparaison SQL vs NoSQL
+                </h2>
+                
+                <!-- Introduction -->
+                <div class="mb-12">
+                    <h3 class="text-2xl font-semibold mb-4 text-blue-300">Introduction</h3>
+                    <p class="text-gray-300 leading-relaxed mb-6">
+                        Les bases de données constituent le cœur de tout système d'information moderne. Avec l'évolution des besoins technologiques, 
+                        deux grandes familles de systèmes de gestion de bases de données (SGBD) se sont imposées : les bases relationnelles (SQL) 
+                        et les bases non-relationnelles (NoSQL).
+                    </p>
+                </div>
+
+                <!-- Bases de données relationnelles (SQL) -->
+                <div class="mb-12">
+                    <h3 class="text-2xl font-semibold mb-6 text-green-300">1.1 Bases de Données Relationnelles (SQL)</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="glass-card rounded-xl p-6">
+                            <h4 class="text-xl font-semibold mb-4 text-yellow-300">Définition</h4>
+                            <p class="text-gray-300 leading-relaxed">
+                                Les bases de données relationnelles organisent les données sous forme de tables liées entre elles par des relations. 
+                                Elles utilisent le langage SQL (Structured Query Language) pour manipuler les données.
+                            </p>
+                        </div>
+                        
+                        <div class="glass-card rounded-xl p-6">
+                            <h4 class="text-xl font-semibold mb-4 text-yellow-300">MySQL - Exemple Populaire</h4>
+                            <p class="text-gray-300 leading-relaxed">
+                                MySQL est l'un des SGBD relationnels les plus utilisés au monde. Open source, rapide et fiable, 
+                                il est parfait pour les applications web et les systèmes d'entreprise.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-6 mb-6">
+                        <h4 class="text-xl font-semibold mb-4 text-cyan-300">Caractéristiques Principales</h4>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <ul class="space-y-2 text-gray-300">
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i>
+                                    Structure rigide avec schéma fixe
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i>
+                                    Propriétés ACID (Atomicité, Cohérence, Isolation, Durabilité)
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i>
+                                    Langage SQL standardisé
+                                </li>
+                            </ul>
+                            <ul class="space-y-2 text-gray-300">
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i>
+                                    Relations entre tables (clés étrangères)
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i>
+                                    Intégrité référentielle
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i>
+                                    Transactions complexes
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bases de données NoSQL -->
+                <div class="mb-12">
+                    <h3 class="text-2xl font-semibold mb-6 text-purple-300">1.2 Bases de Données Non-Relationnelles (NoSQL)</h3>
+                    
+                    <div class="glass-card rounded-xl p-6 mb-6">
+                        <h4 class="text-xl font-semibold mb-4 text-yellow-300">Définition et Évolution</h4>
+                        <p class="text-gray-300 leading-relaxed mb-4">
+                            NoSQL signifie "Not Only SQL". Ces bases de données sont apparues pour répondre aux limitations des bases relationnelles 
+                            face aux besoins du Big Data, de la scalabilité horizontale et de la flexibilité des schémas.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                        <div class="glass-card rounded-xl p-4 text-center">
+                            <i data-lucide="file-text" class="w-8 h-8 mx-auto mb-3 text-blue-400"></i>
+                            <h5 class="font-semibold text-blue-300 mb-2">Document</h5>
+                            <p class="text-sm text-gray-400">MongoDB, CouchDB</p>
+                        </div>
+                        <div class="glass-card rounded-xl p-4 text-center">
+                            <i data-lucide="key" class="w-8 h-8 mx-auto mb-3 text-green-400"></i>
+                            <h5 class="font-semibold text-green-300 mb-2">Clé-Valeur</h5>
+                            <p class="text-sm text-gray-400">Redis, DynamoDB</p>
+                        </div>
+                        <div class="glass-card rounded-xl p-4 text-center">
+                            <i data-lucide="columns" class="w-8 h-8 mx-auto mb-3 text-purple-400"></i>
+                            <h5 class="font-semibold text-purple-300 mb-2">Colonnes</h5>
+                            <p class="text-sm text-gray-400">Cassandra, HBase</p>
+                        </div>
+                        <div class="glass-card rounded-xl p-4 text-center">
+                            <i data-lucide="share-2" class="w-8 h-8 mx-auto mb-3 text-pink-400"></i>
+                            <h5 class="font-semibold text-pink-300 mb-2">Graphe</h5>
+                            <p class="text-sm text-gray-400">Neo4j, ArangoDB</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tableau comparatif -->
+                <div class="mb-12">
+                    <h3 class="text-2xl font-semibold mb-6 text-orange-300">1.3 Tableau Comparatif</h3>
+                    <div class="glass-card rounded-xl p-6 overflow-x-auto">
+                        <div class="figure-caption text-sm text-gray-400 mb-4">Comparaison entre bases de données SQL et NoSQL</div>
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-gray-600">
+                                    <th class="text-left py-3 px-4 text-cyan-300">Critère</th>
+                                    <th class="text-left py-3 px-4 text-green-300">SQL (MySQL)</th>
+                                    <th class="text-left py-3 px-4 text-purple-300">NoSQL</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-300">
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4 font-semibold">Structure</td>
+                                    <td class="py-3 px-4">Tables avec schéma fixe</td>
+                                    <td class="py-3 px-4">Flexible, sans schéma</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4 font-semibold">Scalabilité</td>
+                                    <td class="py-3 px-4">Verticale (plus de puissance)</td>
+                                    <td class="py-3 px-4">Horizontale (plus de serveurs)</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4 font-semibold">Transactions</td>
+                                    <td class="py-3 px-4">ACID complètes</td>
+                                    <td class="py-3 px-4">BASE (Eventually Consistent)</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="py-3 px-4 font-semibold">Cas d'usage</td>
+                                    <td class="py-3 px-4">Applications traditionnelles, ERP</td>
+                                    <td class="py-3 px-4">Big Data, temps réel, IoT</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Objectifs et résumé -->
+                <div class="mb-12">
+                    <h3 class="text-2xl font-semibold mb-6 text-red-300">1.4 Objectifs et Résumé de Cours</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="glass-card rounded-xl p-6">
+                            <h4 class="text-xl font-semibold mb-4 text-yellow-300">
+                                <i data-lucide="target" class="w-5 h-5 inline mr-2"></i>
+                                Objectifs d'Apprentissage
+                            </h4>
+                            <ul class="space-y-2 text-gray-300">
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check" class="w-4 h-4 text-green-400 mt-1"></i>
+                                    Comprendre les différences fondamentales entre SQL et NoSQL
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check" class="w-4 h-4 text-green-400 mt-1"></i>
+                                    Maîtriser les concepts ACID et BASE
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check" class="w-4 h-4 text-green-400 mt-1"></i>
+                                    Choisir le bon type de base selon le contexte
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check" class="w-4 h-4 text-green-400 mt-1"></i>
+                                    Appliquer les bonnes pratiques de conception
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="glass-card rounded-xl p-6">
+                            <h4 class="text-xl font-semibold mb-4 text-cyan-300">
+                                <i data-lucide="book-open" class="w-5 h-5 inline mr-2"></i>
+                                Résumé de Cours
+                            </h4>
+                            <p class="text-gray-300 leading-relaxed mb-4">
+                                Ce cours a couvert l'évolution des systèmes de bases de données, depuis les modèles hiérarchiques 
+                                jusqu'aux solutions NoSQL modernes. Nous avons étudié les propriétés ACID, les différents types 
+                                de NoSQL, et les critères de choix technologique.
+                            </p>
+                            <div class="text-sm text-gray-400">
+                                <strong>Points clés :</strong> Normalisation, indexation, réplication, sharding, CAP theorem
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partie 2: Solutions TP -->
+        <section id="partie2" class="min-h-screen py-12 print-section">
+            <div class="glass-card rounded-3xl p-8">
+                <h2 class="text-4xl font-bold mb-8 bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent">
+                    <i data-lucide="code" class="w-8 h-8 inline mr-3"></i>
+                    Partie 2: Solutions de TP
+                </h2>
+
+                <!-- TP 1: Conception base relationnelle -->
+                <div class="mb-12">
+                    <h3 class="text-2xl font-semibold mb-6 text-blue-300">2.1 TP1 - Conception d'une Base de Données Relationnelle</h3>
+                    
+                    <div class="glass-card rounded-xl p-6 mb-6">
+                        <h4 class="text-xl font-semibold mb-4 text-yellow-300">Énoncé</h4>
+                        <p class="text-gray-300 leading-relaxed mb-4">
+                            Concevoir une base de données pour un système de gestion de bibliothèque universitaire. 
+                            Le système doit gérer les livres, les auteurs, les étudiants, les emprunts et les réservations.
+                        </p>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-6 mb-6">
+                        <h4 class="text-xl font-semibold mb-4 text-green-300">Solution - Modèle Conceptuel</h4>
+                        <div class="figure-caption text-sm text-gray-400 mb-4">Diagramme Entité-Relation de la bibliothèque</div>
+                        <div class="bg-gray-800 rounded-lg p-6 font-mono text-sm overflow-x-auto">
+                            <pre class="text-green-300">
+ENTITÉS:
+- LIVRE (id_livre, titre, isbn, année_publication, nb_exemplaires)
+- AUTEUR (id_auteur, nom, prénom, nationalité, date_naissance)
+- ÉTUDIANT (id_étudiant, nom, prénom, email, filière, année_étude)
+- EMPRUNT (id_emprunt, date_emprunt, date_retour_prévue, date_retour_réelle)
+- RÉSERVATION (id_réservation, date_réservation, statut)
+
+RELATIONS:
+- ÉCRIRE (AUTEUR, LIVRE) - N:M
+- EMPRUNTER (ÉTUDIANT, LIVRE, EMPRUNT) - 1:N:M
+- RÉSERVER (ÉTUDIANT, LIVRE, RÉSERVATION) - 1:N:M
+                            </pre>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-6 mb-6">
+                        <h4 class="text-xl font-semibold mb-4 text-purple-300">Solution - Script SQL</h4>
+                        <div class="bg-gray-800 rounded-lg p-6 font-mono text-sm overflow-x-auto">
+                            <pre class="text-cyan-300">
+-- Création des tables
+CREATE TABLE auteurs (
+    id_auteur INT PRIMARY KEY AUTO_INCREMENT,
+    nom VARCHAR(100) NOT NULL,
+    prénom VARCHAR(100),
+    nationalité VARCHAR(50),
+    date_naissance DATE
+);
+
+CREATE TABLE livres (
+    id_livre INT PRIMARY KEY AUTO_INCREMENT,
+    titre VARCHAR(200) NOT NULL,
+    isbn VARCHAR(13) UNIQUE,
+    année_publication YEAR,
+    nb_exemplaires INT DEFAULT 1
+);
+
+CREATE TABLE étudiants (
+    id_étudiant INT PRIMARY KEY AUTO_INCREMENT,
+    nom VARCHAR(100) NOT NULL,
+    prénom VARCHAR(100),
+    email VARCHAR(150) UNIQUE,
+    filière VARCHAR(100),
+    année_étude INT
+);
+
+CREATE TABLE emprunts (
+    id_emprunt INT PRIMARY KEY AUTO_INCREMENT,
+    id_étudiant INT,
+    id_livre INT,
+    date_emprunt DATE NOT NULL,
+    date_retour_prévue DATE NOT NULL,
+    date_retour_réelle DATE,
+    FOREIGN KEY (id_étudiant) REFERENCES étudiants(id_étudiant),
+    FOREIGN KEY (id_livre) REFERENCES livres(id_livre)
+);
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TP 2: MongoDB -->
+                <div class="mb-12">
+                    <h3 class="text-2xl font-semibold mb-6 text-purple-300">2.2 TP2 - Base de Données NoSQL (MongoDB)</h3>
+                    
+                    <div class="glass-card rounded-xl p-6 mb-6">
+                        <h4 class="text-xl font-semibold mb-4 text-yellow-300">Énoncé</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            Implémenter un système de blog avec MongoDB. Gérer les articles, commentaires, 
+                            catégories et statistiques de lecture avec une structure de documents flexible.
+                        </p>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-6 mb-6">
+                        <h4 class="text-xl font-semibold mb-4 text-green-300">Solution - Structure des Documents</h4>
+                        <div class="bg-gray-800 rounded-lg p-6 font-mono text-sm overflow-x-auto">
+                            <pre class="text-yellow-300">
+// Collection: articles
+{
+  "_id": ObjectId("..."),
+  "titre": "Introduction aux bases NoSQL",
+  "contenu": "Le contenu de l'article...",
+  "auteur": {
+    "nom": "Dupont",
+    "email": "dupont@email.com"
+  },
+  "catégories": ["NoSQL", "Bases de données", "MongoDB"],
+  "date_publication": ISODate("2025-11-16"),
+  "statistiques": {
+    "vues": 150,
+    "likes": 23,
+    "partages": 5
+  },
+  "commentaires": [
+    {
+      "auteur": "Martin",
+      "contenu": "Très bon article!",
+      "date": ISODate("2025-11-16")
+    }
+  ],
+  "tags": ["nosql", "mongodb", "database"]
+}
+                            </pre>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-6">
+                        <h4 class="text-xl font-semibold mb-4 text-cyan-300">Solution - Requêtes MongoDB</h4>
+                        <div class="bg-gray-800 rounded-lg p-6 font-mono text-sm overflow-x-auto">
+                            <pre class="text-green-300">
+// Insérer un article
+db.articles.insertOne({
+  titre: "Guide MongoDB",
+  contenu: "Contenu détaillé...",
+  auteur: { nom: "Alice", email: "alice@test.com" },
+  catégories: ["NoSQL", "Tutorial"],
+  date_publication: new Date(),
+  statistiques: { vues: 0, likes: 0, partages: 0 },
+  commentaires: [],
+  tags: ["mongodb", "guide"]
+});
+
+// Rechercher articles par catégorie
+db.articles.find({ "catégories": "NoSQL" });
+
+// Mettre à jour les statistiques
+db.articles.updateOne(
+  { "_id": ObjectId("...") },
+  { $inc: { "statistiques.vues": 1 } }
+);
+
+// Ajouter un commentaire
+db.articles.updateOne(
+  { "_id": ObjectId("...") },
+  { $push: { 
+      "commentaires": {
+        auteur: "Bob",
+        contenu: "Excellent!",
+        date: new Date()
+      }
+    }
+  }
+);
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Table des figures -->
+        <section id="table-figures" class="min-h-screen py-12 print-section">
+            <div class="glass-card rounded-3xl p-8">
+                <h2 class="text-4xl font-bold mb-8 text-center bg-gradient-to-r from-pink-400 to-red-400 bg-clip-text text-transparent">
+                    <i data-lucide="image" class="w-8 h-8 inline mr-3"></i>
+                    Table des Figures
+                </h2>
+                <div id="figures-content" class="space-y-3 text-lg">
+                    <!-- Généré automatiquement par JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusion -->
+        <section id="conclusion" class="min-h-screen py-12 print-section">
+            <div class="glass-card rounded-3xl p-8">
+                <h2 class="text-4xl font-bold mb-8 text-center bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+                    <i data-lucide="flag" class="w-8 h-8 inline mr-3"></i>
+                    Conclusion
+                </h2>
+                
+                <div class="space-y-6 text-lg text-gray-300 leading-relaxed">
+                    <p>
+                        Ce rapport a exploré les différences fondamentales entre les bases de données relationnelles (SQL) 
+                        et non-relationnelles (NoSQL), en mettant l'accent sur MySQL comme exemple de SGBD relationnel.
+                    </p>
+                    
+                    <p>
+                        <strong class="text-blue-300">Synthèse des apprentissages :</strong>
+                    </p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 my-8">
+                        <div class="glass-card rounded-xl p-6">
+                            <h3 class="text-xl font-semibold mb-4 text-green-300">Forces du SQL</h3>
+                            <ul class="space-y-2 text-gray-300">
+                                <li>• Intégrité des données garantie</li>
+                                <li>• Transactions ACID complètes</li>
+                                <li>• Langage standardisé et mature</li>
+                                <li>• Excellent pour les données structurées</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="glass-card rounded-xl p-6">
+                            <h3 class="text-xl font-semibold mb-4 text-purple-300">Avantages du NoSQL</h3>
+                            <ul class="space-y-2 text-gray-300">
+                                <li>• Scalabilité horizontale native</li>
+                                <li>• Flexibilité des schémas</li>
+                                <li>• Performance sur gros volumes</li>
+                                <li>• Adapté aux données semi-structurées</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <p>
+                        Les travaux pratiques ont démontré l'importance de choisir la technologie appropriée selon le contexte. 
+                        Une bibliothèque universitaire bénéficie de la structure rigide du SQL, tandis qu'un blog moderne 
+                        tire parti de la flexibilité de MongoDB.
+                    </p>
+                    
+                    <div class="glass-card rounded-xl p-6 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-blue-400/30">
+                        <p class="text-center text-xl font-semibold text-blue-300">
+                            "Le choix entre SQL et NoSQL n'est pas une question de supériorité, 
+                            mais d'adéquation aux besoins spécifiques du projet."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Références -->
+        <section id="references" class="min-h-screen py-12 print-section">
+            <div class="glass-card rounded-3xl p-8">
+                <h2 class="text-4xl font-bold mb-8 text-center bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                    <i data-lucide="book" class="w-8 h-8 inline mr-3"></i>
+                    Références
+                </h2>
+                
+                <div class="space-y-4 text-gray-300">
+                    <div class="glass-card rounded-xl p-4">
+                        <h4 class="font-semibold text-blue-300 mb-2">Ouvrages</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li>• Silberschatz, A., Galvin, P. B., & Gagne, G. (2018). <em>Database System Concepts</em>. McGraw-Hill Education.</li>
+                            <li>• Chodorow, K. (2013). <em>MongoDB: The Definitive Guide</em>. O'Reilly Media.</li>
+                            <li>• Date, C. J. (2019). <em>An Introduction to Database Systems</em>. Pearson.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="glass-card rounded-xl p-4">
+                        <h4 class="font-semibold text-green-300 mb-2">Documentation Officielle</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li>• MySQL Documentation. (2025). <em>MySQL 8.0 Reference Manual</em>. Oracle Corporation.</li>
+                            <li>• MongoDB Inc. (2025). <em>MongoDB Manual</em>. https://docs.mongodb.com/</li>
+                            <li>• PostgreSQL Global Development Group. (2025). <em>PostgreSQL Documentation</em>.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="glass-card rounded-xl p-4">
+                        <h4 class="font-semibold text-purple-300 mb-2">Articles et Ressources</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li>• Brewer, E. (2000). "Towards Robust Distributed Systems". <em>PODC Keynote</em>.</li>
+                            <li>• Cattell, R. (2011). "Scalable SQL and NoSQL Data Stores". <em>ACM SIGMOD Record</em>, 39(4).</li>
+                            <li>• Stonebraker, M. (2010). "SQL databases v. NoSQL databases". <em>Communications of the ACM</em>, 53(4).</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="glass-card rounded-xl p-4">
+                        <h4 class="font-semibold text-orange-300 mb-2">Ressources en Ligne</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li>• W3Schools SQL Tutorial. https://www.w3schools.com/sql/</li>
+                            <li>• MongoDB University. https://university.mongodb.com/</li>
+                            <li>• Stack Overflow Developer Survey. (2025). Database Technologies Trends.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Variables globales
+        let currentSection = 'title-page';
+        const sections = ['title-page', 'table-of-contents', 'partie1', 'partie2', 'table-figures', 'conclusion', 'references'];
+        
+        // Génération automatique de la table des matières
+        function generateTableOfContents() {
+            const tocContent = document.getElementById('toc-content');
+            const headings = document.querySelectorAll('h2, h3');
+            
+            tocContent.innerHTML = '';
+            
+            headings.forEach((heading, index) => {
+                if (heading.closest('#table-of-contents')) return; // Ignorer les titres de la table des matières elle-même
+                
+                const level = heading.tagName === 'H2' ? 'ml-0' : 'ml-6';
+                const textColor = heading.tagName === 'H2' ? 'text-blue-300' : 'text-gray-300';
+                
+                const tocItem = document.createElement('div');
+                tocItem.className = `toc-item p-3 rounded-lg ${level} ${textColor} hover:bg-white/10 transition`;
+                tocItem.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span>${heading.textContent}</span>
+                        <span class="text-sm text-gray-500">${index + 1}</span>
+                    </div>
+                `;
+                
+                tocItem.addEventListener('click', () => {
+                    heading.scrollIntoView({ behavior: 'smooth' });
+                });
+                
+                tocContent.appendChild(tocItem);
+            });
+        }
+        
+        // Génération automatique de la table des figures
+        function generateTableOfFigures() {
+            const figuresContent = document.getElementById('figures-content');
+            const figures = document.querySelectorAll('.figure-caption');
+            
+            figuresContent.innerHTML = '';
+            
+            if (figures.length === 0) {
+                figuresContent.innerHTML = '<p class="text-gray-400 text-center">Aucune figure trouvée dans le document.</p>';
+                return;
+            }
+            
+            figures.forEach((figure, index) => {
+                const figureItem = document.createElement('div');
+                figureItem.className = 'toc-item p-3 rounded-lg text-gray-300 hover:bg-white/10 transition cursor-pointer';
+                figureItem.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span>Figure ${index + 1}: ${figure.textContent}</span>
+                        <span class="text-sm text-gray-500">Page ${Math.floor(index / 2) + 1}</span>
+                    </div>
+                `;
+                
+                figureItem.addEventListener('click', () => {
+                    figure.scrollIntoView({ behavior: 'smooth' });
+                });
+                
+                figuresContent.appendChild(figureItem);
+            });
+        }
+        
+        // Fonction d'impression
+        function printReport() {
+            window.print();
+        }
+        
+        // Navigation vers la table des matières
+        function showTableOfContents() {
+            document.getElementById('table-of-contents').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialiser les icônes Lucide
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+            
+            // Générer les tables
+            generateTableOfContents();
+            generateTableOfFigures();
+            
+            // Événements des boutons
+            document.getElementById('printBtn').addEventListener('click', printReport);
+            document.getElementById('tocBtn').addEventListener('click', showTableOfContents);
+            
+            // Animation d'apparition des sections
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
+            });
+            
+            // Navigation au clavier
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.key === 'p') {
+                    e.preventDefault();
+                    printReport();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
